@@ -1,12 +1,20 @@
 {
-  "wallpapers": [
-    {
-      "title": "Day",
-      "url_1080p": "https://drive.google.com/uc?export=download&id=1zdfJqjEqymnvrkoHyde8Wzl3m8D5Ff-j"
-    },
-    {
-      "title": "Night",
-      "url_1080p": "https://drive.google.com/uc?export=download&id=1vOc8VXxcc1b5o8b_e6pp8elJuoDoEO7b"
-    }
-  ]
+  "location": {
+    "latitude": 51.02,
+    "longitude": -3.10,
+    "timezone": "Europe/London"
+  },
+  "wallpapers": {
+    "day": "https://drive.google.com/uc?export=download&id=1zdfJqjEqymnvrkoHyde8Wzl3m8D5Ff-j",
+    "night": "https://drive.google.com/uc?export=download&id=1vOc8VXxcc1b5o8b_e6pp8elJuoDoEO7b"
+  },
+  "solar": {
+    "sunriseOffsetMinutes": 0,
+    "sunsetOffsetMinutes": 0,
+    "testMode": "night"
+  },
+  "events": {
+    "enabled": false,
+    "sources": []
+  }
 }
