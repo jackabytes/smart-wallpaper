@@ -51,14 +51,17 @@ else:
 
 
 # Create Projectivy wallpaper feed
-output = {
-    "wallpapers": [
-        {
-            "title": title,
-            "url_1080p": wallpaper
-        }
-    ]
-}
+output = [
+
+    {
+
+        "title": title,
+
+        "url_1080p": wallpaper
+
+    }
+
+]
 
 
 # Write wallpaper.json
