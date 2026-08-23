@@ -3,10 +3,6 @@
     {
       "title": "Day",
       "url_1080p": "DAY_VIDEO_URL"
-    },
-    {
-      "title": "Night",
-      "url_1080p": "NIGHT_VIDEO_URL"
     }
   ]
 }
