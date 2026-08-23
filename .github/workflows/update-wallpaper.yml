@@ -1,12 +1,9 @@
 name: Update Wallpaper
 
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+"on":
   schedule:
     - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,7 +21,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
+      - name: Install Astral
         run: pip install astral
 
       - name: Generate wallpaper feed
