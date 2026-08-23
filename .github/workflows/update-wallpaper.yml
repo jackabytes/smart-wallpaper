@@ -1,9 +1,12 @@
-name: Smart Wallpaper
+name: Update Wallpaper
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
+  push:
+    branches:
+      - main
   workflow_dispatch:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
 
 permissions:
   contents: write
