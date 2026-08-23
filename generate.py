@@ -42,7 +42,15 @@ sunset = solar["sunset"]
 
 
 # Work out whether it is currently day or night
-if sunrise <= now < sunset:
+test_mode = config.get("solar", {}).get("testMode")
+
+if test_mode == "day":
+    wallpaper = config["wallpapers"]["day"]
+    title = "Day"
+elif test_mode == "night":
+    wallpaper = config["wallpapers"]["night"]
+    title = "Night"
+elif sunrise <= now < sunset:
     wallpaper = config["wallpapers"]["day"]
     title = "Day"
 else:
