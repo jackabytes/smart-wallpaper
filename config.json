@@ -4,9 +4,17 @@
     "longitude": -3.10,
     "timezone": "Europe/London"
   },
-"wallpapers": {
-  "day": "https://smart-wallpaper.s3.filebase.io/day.mp4",
-  "night": "https://smart-wallpaper.s3.filebase.io/night.mp4"
+{
+  "wallpapers": [
+    {
+      "title": "Day",
+      "url_1080p": "https://drive.google.com/uc?export=download&id=1zdfJqjEqymnvrkoHyde8Wzl3m8D5Ff-j"
+    },
+    {
+      "title": "Night",
+      "url_1080p": "https://drive.google.com/uc?export=download&id=1vOc8VXxcc1b5o8b_e6pp8elJuoDoEO7b"
+    }
+  ]
 },
 "solar": {
   "sunriseOffsetMinutes": 0,
