@@ -5,8 +5,8 @@
     "timezone": "Europe/London"
   },
   "wallpapers": {
-    "day": "DAY_VIDEO_URL",
-    "night": "NIGHT_VIDEO_URL"
+    "day": "https://cdn.truefilesize.com/mp4/sample-10mb.mp4",
+    "night": "https://cdn.truefilesize.com/mp4/sample-10mb.mp4"
   },
   "solar": {
     "sunriseOffsetMinutes": 0,
