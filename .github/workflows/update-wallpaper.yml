@@ -1,17 +1,21 @@
-name: Update Wallpaper
+ name: Update Wallpaper
 
 "on":
   schedule:
     - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
+
 concurrency:
   group: wallpaper-update
-  cancel-in-progress: false
+  cancel-in-progress: true
+
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  update-wallpaper:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,23 +33,25 @@ jobs:
       - name: Generate wallpaper feed
         run: python generate.py
 
-      - name: Commit updated wallpaper
+      - name: Prepare Pages
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir public
+          cp wallpaper.json public/
 
-          git add wallpaper.json
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
 
-          if git diff --cached --quiet; then
-            echo "No wallpaper change needed."
-            exit 0
-          fi
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-          git commit -m "Update wallpaper"
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
-          git fetch origin main
-          git rebase origin/main
-
-          git push origin HEAD:main
-
-          
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4   
