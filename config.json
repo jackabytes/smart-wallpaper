@@ -1,0 +1,19 @@
+{
+  "location": {
+    "latitude": 51.02,
+    "longitude": -3.10,
+    "timezone": "Europe/London"
+  },
+  "wallpapers": {
+    "day": "DAY_VIDEO_URL",
+    "night": "NIGHT_VIDEO_URL"
+  },
+  "solar": {
+    "sunriseOffsetMinutes": 0,
+    "sunsetOffsetMinutes": 0
+  },
+  "events": {
+    "enabled": false,
+    "sources": []
+  }
+}
