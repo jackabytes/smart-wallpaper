@@ -11,7 +11,7 @@
   "solar": {
     "sunriseOffsetMinutes": 0,
     "sunsetOffsetMinutes": 0,
-    "testMode": "null"
+    "testMode": "day"
   },
   "events": {
     "enabled": false,
