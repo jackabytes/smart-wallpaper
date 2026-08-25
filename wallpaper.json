@@ -1,6 +1,8 @@
-[
-  {
-    "title": "Drive Test",
-    "url_1080p": "https://drive.google.com/uc?export=download&id=1BDeR95Wsc8o4IQPZ2ME1pkdOs1dvd3ta"
-  }
-]
+{
+  "wallpapers": [
+    {
+      "title": "Day",
+      "url_1080p": "DAY_VIDEO_URL"
+    }
+  ]
+}
