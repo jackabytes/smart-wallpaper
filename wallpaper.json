@@ -1,8 +1,6 @@
 [
   {
-    "preferredMediaUri": "https://drive.usercontent.google.com/download?id=1BDeR95Wsc8o4IQPZ2ME1pkdOs1dvd3ta&export=download&authuser=0",
-    "mediaType": "VIDEO",
-    "title": "Smart Wallpaper Drive Test",
-    "location": "Google Drive"
+    "title": "Drive Test",
+    "url_1080p": "https://drive.google.com/uc?export=download&id=1BDeR95Wsc8o4IQPZ2ME1pkdOs1dvd3ta"
   }
 ]
