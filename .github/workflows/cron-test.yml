@@ -1,11 +1,16 @@
 name: Cron Test
+
+# Testing GitHub scheduled workflows
+
 on:
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:
+
 jobs:
   cron-test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Confirm scheduled run
         run: |
