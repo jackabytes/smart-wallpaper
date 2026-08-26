@@ -1,83 +1,83 @@
+import hashlib
 import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from astral import LocationInfo
-from astral.sun import sun
-
-
-# Load configuration
-with open("config.json", "r") as file:
-    config = json.load(file)
-
-
-# Location
-latitude = config["location"]["latitude"]
-longitude = config["location"]["longitude"]
-timezone = config["location"]["timezone"]
-
-location = LocationInfo(
-    name="Wallpaper",
-    region="",
-    timezone=timezone,
-    latitude=latitude,
-    longitude=longitude
-)
-
-
-# Current local time
-local_tz = ZoneInfo(timezone)
-now = datetime.now(local_tz)
-
-
-# Today's sunrise and sunset
-solar = sun(
-    location.observer,
-    date=now.date(),
-    tzinfo=local_tz
-)
-
-
-sunrise = solar["sunrise"]
-sunset = solar["sunset"]
-
-
-# Work out whether it is currently day or night
-test_mode = config.get("solar", {}).get("testMode")
-
-if test_mode == "day":
-    wallpaper = config["wallpapers"]["day"]
-    title = "Day"
-elif test_mode == "night":
-    wallpaper = config["wallpapers"]["night"]
-    title = "Night"
-elif sunrise <= now < sunset:
-    wallpaper = config["wallpapers"]["day"]
-    title = "Day"
-else:
-    wallpaper = config["wallpapers"]["night"]
-    title = "Night"
-
-
-# Create Projectivy wallpaper feed
-output = [
-
-    {
-
-        "title": title,
-
-        "url_1080p": wallpaper
-
-    }
-
-]
-
-
-# Write wallpaper.json
-with open("wallpaper.json", "w") as file:
-    json.dump(output, file, indent=2)
-
-
-print(f"Local time: {now}")
-print(f"Sunrise:    {sunrise}")
-print(f"Sunset:     {sunset}")
-print(f"Wallpaper:  {title}")
+CONFIG_FILE = "config.json"
+OUTPUT_FILE = "wallpaper.json"
+def load_config():
+    with open(CONFIG_FILE, "r", encoding="utf-8") as file:
+        return json.load(file)
+def time_to_minutes(value):
+    hour, minute = map(int, value.split(":"))
+    return hour * 60 + minute
+def get_current_time(config):
+    timezone_name = config["location"]["timezone"]
+    return datetime.now(ZoneInfo(timezone_name))
+def get_period(config, now):
+    current = now.hour * 60 + now.minute
+    schedule = config["schedule"]
+    for period, settings in schedule.items():
+        start = time_to_minutes(settings["start"])
+        end = time_to_minutes(settings["end"])
+        if start < end:
+            if start <= current < end:
+                return period
+        else:
+            # Period crosses midnight.
+            if current >= start or current < end:
+                return period
+    return "night"
+def choose_video(config, period, now):
+    videos = config["wallpapers"].get(period, [])
+    if not videos:
+        raise ValueError(
+            f"No wallpapers configured for period: {period}"
+        )
+    # Keep the selected video stable for the entire period.
+    #
+    # The GitHub workflow runs every 15 minutes, so using random.choice()
+    # would otherwise potentially change the video every workflow run.
+    #
+    # The date + period produces a repeatable selection for that period.
+    selection_key = f"{now.date().isoformat()}-{period}"
+    digest = hashlib.sha256(
+        selection_key.encode("utf-8")
+    ).hexdigest()
+    index = int(digest, 16) % len(videos)
+    return videos[index]
+def generate_wallpaper():
+    config = load_config()
+    now = get_current_time(config)
+    period = get_period(config, now)
+    video_url = choose_video(
+        config,
+        period,
+        now
+    )
+    wallpaper = [
+        {
+            "title": period.capitalize(),
+            "url_1080p": video_url
+        }
+    ]
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as file:
+        json.dump(
+            wallpaper,
+            file,
+            indent=2
+        )
+    print(
+        f"Time: {now.strftime('%Y-%m-%d %H:%M:%S %Z')}"
+    )
+    print(
+        f"Period: {period}"
+    )
+    print(
+        f"Wallpaper: {video_url}"
+    )
+if __name__ == "__main__":
+    generate_wallpaper()
