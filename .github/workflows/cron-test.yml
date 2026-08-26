@@ -1,7 +1,7 @@
 name: Cron Test
 on:
   schedule:
-    - cron: "35 * * * *"
+    - cron: "38 * * * *"
   workflow_dispatch:
 jobs:
   cron-test:
